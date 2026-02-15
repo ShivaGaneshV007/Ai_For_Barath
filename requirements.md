@@ -137,9 +137,3 @@ workflows.
 
 ------------------------------------------------------------------------
 
-## 6. Success Criteria
-
--   Users can capture and recall knowledge seamlessly
--   Teams maintain shared project context without manual documentation
--   Meetings automatically convert to actionable outputs
--   System performs reliably within hackathon constraints
