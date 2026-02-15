@@ -1,5 +1,7 @@
 # Requirements.md
 
+#MIND VAULT
+
 ## AI-Powered Personal & Collective Knowledge System
 
 ------------------------------------------------------------------------
