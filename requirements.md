@@ -2,7 +2,6 @@
 
 ## MIND VAULT
 
-## AI-Powered Personal & Collective Knowledge System
 
 ## AI-Powered Personal & Collective Knowledge System
 
