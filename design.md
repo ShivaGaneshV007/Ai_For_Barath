@@ -1,134 +1,334 @@
-# Design.md
+# design.md
 
-## System Architecture & Technical Design
-
-------------------------------------------------------------------------
-
-## 1. Architectural Overview
-
-The platform follows a **layered AI‑native architecture**:
-
-1.  Capture Layer\
-2.  Intelligence Processing Layer\
-3.  Memory & Storage Layer\
-4.  Collaboration Layer\
-5.  Security & Governance Layer
-
-This separation ensures scalability, modularity, and maintainability.
+## MindVault -- System Architecture & Technical Design
 
 ------------------------------------------------------------------------
 
-## 2. Component‑Level Design
+# 1. Design Overview
 
-### 2.1 Capture Layer
+**MindVault** is architected as a **layered, AI-native cognitive
+system** that enables:
 
-Handles multimodal ingestion:
+-   Continuous multimodal knowledge capture\
+-   Context-aware semantic understanding\
+-   Retrieval-augmented reasoning\
+-   Secure collaborative intelligence\
+-   Real-time synchronization across devices
 
--   Voice input → Speech‑to‑Text pipeline
--   Text notes → Direct semantic parsing
--   Screenshots → OCR + embedding generation
+The architecture follows **modern cloud-native and AI SaaS design
+principles** to ensure:
 
-Outputs structured events to the processing layer.
-
-------------------------------------------------------------------------
-
-### 2.2 Intelligence Processing Layer
-
-Core AI reasoning components:
-
--   Intent classification models
--   Task & decision extraction
--   Semantic embedding generation
--   Context linking across historical knowledge
--   Summarization and explanation generation
-
-Implements Human‑in‑the‑Loop validation before committing critical
-actions.
+-   Scalability\
+-   Security\
+-   Reliability\
+-   Low latency\
+-   Future extensibility
 
 ------------------------------------------------------------------------
 
-### 2.3 Memory & Storage Layer
+# 2. High-Level Architecture Layers
 
-Hybrid storage architecture:
+The system is divided into the following logical layers:
 
-**Relational Storage (PostgreSQL)** - Users - Rooms - Tasks - Meetings -
-Permissions
-
-**Vector Storage (ChromaDB / FAISS)** - Semantic embeddings - Context
-retrieval - Cross‑knowledge similarity search
-
-**Cache & Queue (Redis)** - Realtime notifications - Background job
-triggers - Session state
-
-------------------------------------------------------------------------
-
-### 2.4 Collaboration Layer
-
-Provides shared intelligence:
-
--   Realtime updates via WebSockets
--   Shared Room knowledge graph
--   Automatic task propagation
--   Meeting knowledge persistence
--   Onboarding context generation
-
-------------------------------------------------------------------------
-
-### 2.5 Meet Mode Engine
-
-Pipeline:
-
-1.  Audio capture\
-2.  Transcription (Whisper)\
-3.  Speaker segmentation\
-4.  Decision & task extraction\
-5.  MoM generation via LLM\
-6.  Storage in Room context
-
-Ensures meetings become persistent, actionable knowledge.
+1.  **Client Layer** -- Mobile, Web, and Desktop applications\
+2.  **API Gateway & Backend Layer** -- Authentication, routing,
+    orchestration\
+3.  **Realtime Collaboration Layer** -- WebSockets and live
+    synchronization\
+4.  **Application Services Layer** -- Personal Space, Rooms, Meet Mode,
+    Tasks, Notifications\
+5.  **Multimodal Ingestion Layer** -- Voice, text, images, and meeting
+    streams\
+6.  **AI Intelligence Layer** -- NLP, intent detection, summarization,
+    task extraction\
+7.  **Memory & Knowledge Layer** -- Vector database, knowledge graph,
+    semantic indexing\
+8.  **Context & Reasoning Layer** -- Retrieval, prompt construction,
+    reasoning context\
+9.  **LLM Processing Layer** -- Generative reasoning and summarization\
+10. **Async Processing Layer** -- Background jobs, queues, and
+    notifications\
+11. **Data Storage Layer** -- Relational, vector, and graph storage\
+12. **Security & Governance Layer** -- Authentication, RBAC, encryption,
+    privacy
 
 ------------------------------------------------------------------------
 
-## 3. Security Architecture
+# 3. Component-Level Design
 
-### Identity & Access
+## 3.1 Client Applications
 
--   JWT‑based authentication
--   Role‑based permissions per Room
+-   **React Native Mobile App** -- Cross-platform Android & iOS
+    experience\
+-   **Web Dashboard** -- Full productivity interface\
+-   **Desktop App** -- Focused development and meeting workflows
 
-### Data Isolation
+Responsibilities:
 
--   Context‑scoped retrieval
--   No cross‑room inference without permission
-
-### Encryption
-
--   TLS for transport
--   Encrypted storage for sensitive artifacts
-
-------------------------------------------------------------------------
-
-## 4. Deployment Architecture
-
-### Services
-
--   API service (FastAPI)
--   Worker service (Celery/RQ)
--   Vector DB service
--   Relational DB service
--   Redis realtime service
-
-### Scalability
-
--   Containerized deployment
--   Horizontal scaling of workers
--   Load‑balanced API gateway
+-   User interaction\
+-   Voice capture\
+-   Real-time updates\
+-   Secure session handling
 
 ------------------------------------------------------------------------
 
-## 5. Future Extensions
+## 3.2 API Gateway & Backend
 
--   On‑device transcription for privacy
--   Multi‑modal video understanding
--   Predictive task recommendations
--   Organization‑wide knowledge graphs
+Primary responsibilities:
+
+-   Request authentication and authorization\
+-   Routing to microservices\
+-   Rate limiting and validation\
+-   Orchestration of AI and storage workflows
+
+Technologies:
+
+-   **FastAPI / Node.js backend**\
+-   **JWT-based authentication**\
+-   **REST + WebSocket endpoints**
+
+------------------------------------------------------------------------
+
+## 3.3 Realtime Collaboration Layer
+
+Provides:
+
+-   Live room updates\
+-   Meeting transcription streaming\
+-   Task and notification synchronization
+
+Technologies:
+
+-   **WebSockets / AWS AppSync**\
+-   **Event-driven messaging via Redis or Pub/Sub**
+
+------------------------------------------------------------------------
+
+## 3.4 Application Services
+
+### Personal Space Service
+
+-   Stores individual memories\
+-   Handles voice notes, screenshots, and learning logs
+
+### Room Service
+
+-   Maintains shared project knowledge\
+-   Tracks decisions, tasks, and updates
+
+### Meet Mode Service
+
+-   Processes meeting audio\
+-   Generates summaries and action items
+
+### Task Manager
+
+-   Tracks responsibilities, due dates, and completion
+
+### Notification Service
+
+-   Sends real-time and push alerts
+
+------------------------------------------------------------------------
+
+## 3.5 Multimodal Ingestion & Processing
+
+Supports:
+
+-   Voice → Speech-to-text\
+-   Images → OCR extraction\
+-   Text → Preprocessing & normalization\
+-   Meeting audio → Streaming transcription
+
+Technologies:
+
+-   **Whisper / Deepgram STT**\
+-   **OCR pipelines**\
+-   **Preprocessing & cleaning services**
+
+------------------------------------------------------------------------
+
+## 3.6 AI Intelligence Core
+
+Capabilities:
+
+-   Intent detection\
+-   Entity recognition\
+-   Task extraction\
+-   Context detection\
+-   Summarization
+
+This layer transforms **raw input → structured knowledge**.
+
+------------------------------------------------------------------------
+
+## 3.7 Memory & Knowledge System
+
+Hybrid memory architecture:
+
+### Relational Storage (PostgreSQL)
+
+-   Users\
+-   Rooms\
+-   Meetings\
+-   Tasks
+
+### Vector Memory (FAISS / ChromaDB)
+
+-   Semantic embeddings\
+-   Context retrieval\
+-   Memory recall
+
+### Knowledge Graph (Neo4j)
+
+-   Relationships between:
+    -   Users\
+    -   Tasks\
+    -   Decisions\
+    -   Projects
+
+------------------------------------------------------------------------
+
+## 3.8 Context & Reasoning Layer
+
+Responsibilities:
+
+-   Compile relevant context\
+-   Retrieve semantic memory\
+-   Resolve intent before LLM reasoning
+
+Implements **Retrieval-Augmented Generation (RAG)** pipeline.
+
+------------------------------------------------------------------------
+
+## 3.9 LLM Processing Layer
+
+Handles:
+
+-   Natural language reasoning\
+-   Meeting summarization\
+-   Knowledge synthesis\
+-   Conversational recall
+
+Technologies:
+
+-   **OpenAI / AWS Bedrock models**\
+-   Prompt orchestration pipelines
+
+Feedback loop updates **vector memory** after reasoning.
+
+------------------------------------------------------------------------
+
+## 3.10 Async Processing & Background Jobs
+
+Supports:
+
+-   Notification delivery\
+-   Embedding generation\
+-   Meeting processing\
+-   Task scheduling
+
+Technologies:
+
+-   **Celery / Redis queues / AWS SQS**
+
+Ensures **non-blocking performance**.
+
+------------------------------------------------------------------------
+
+## 3.11 Data Storage Architecture
+
+  Storage Type     Technology       Purpose
+  ---------------- ---------------- ---------------------------
+  Relational DB    PostgreSQL       Structured entities
+  Vector DB        FAISS / Chroma   Semantic memory
+  Graph DB         Neo4j            Relationship intelligence
+  Cache / Queue    Redis            Realtime + async
+  Object Storage   AWS S3           Audio, images, media
+
+------------------------------------------------------------------------
+
+# 4. Security & Governance
+
+### Identity & Access Control
+
+-   JWT authentication\
+-   Role-Based Access Control (RBAC)\
+-   Room-level confidentiality
+
+### Data Protection
+
+-   TLS encryption in transit\
+-   Encrypted storage at rest\
+-   Secure media storage
+
+### Privacy Controls
+
+-   Consent-based recording\
+-   Data export & deletion support\
+-   Audit logging for compliance
+
+------------------------------------------------------------------------
+
+# 5. Scalability Strategy
+
+MindVault is designed for:
+
+-   Horizontal microservice scaling\
+-   Distributed vector search\
+-   Event-driven async processing\
+-   Cloud-native deployment on AWS
+
+Future-ready for:
+
+-   Multi-tenant SaaS architecture\
+-   Organization-wide knowledge graphs\
+-   On-device AI inference
+
+------------------------------------------------------------------------
+
+# 6. Reliability & Fault Tolerance
+
+-   Background worker retry mechanisms\
+-   Graceful degradation if AI fails\
+-   Redundant storage backups\
+-   Monitoring & logging integration
+
+Ensures **enterprise-grade resilience**.
+
+------------------------------------------------------------------------
+
+# 7. Deployment Architecture
+
+Planned deployment:
+
+-   Containerized services (Docker)\
+-   Managed cloud infrastructure (AWS)\
+-   Load-balanced API gateway\
+-   Scalable worker nodes
+
+Supports **production-ready scaling beyond hackathon**.
+
+------------------------------------------------------------------------
+
+# 8. Future Extensions
+
+-   Real-time collaborative whiteboards\
+-   Video understanding in Meet Mode\
+-   Predictive task recommendations\
+-   Cross-organization knowledge federation\
+-   Offline-first mobile AI memory
+
+------------------------------------------------------------------------
+
+# 9. Design Summary
+
+MindVault delivers:
+
+-   Persistent personal & team intelligence\
+-   Secure AI-powered memory recall\
+-   Real-time collaborative productivity\
+-   Scalable cloud-native architecture
+
+Positioning it as a **next-generation cognitive operating system for
+learning and development**.
