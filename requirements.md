@@ -4,6 +4,8 @@
 
 ## AI-Powered Personal & Collective Knowledge System
 
+## AI-Powered Personal & Collective Knowledge System
+
 ------------------------------------------------------------------------
 
 ## 1. Product Overview
